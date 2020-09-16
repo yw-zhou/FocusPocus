@@ -28,13 +28,16 @@ class BarChart extends Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Parse the Data
-    d3.csv("./sampleData.csv", function (d) {
-      console.log(d);
-      return {
-        Date: d.Date,
-        PCount: d.PCount,
-      };
-    }).then(function (data) {
+    d3.csv(
+      "https://raw.githubusercontent.com/yw-zhou/FocusPocus/master/src/sampleData.csv",
+      function (d) {
+        console.log(d);
+        return {
+          Date: d.Date,
+          PCount: JSON.parse(d.PCount),
+        };
+      }
+    ).then(function (data) {
       // X axis
       console.log(data);
       var x = d3
@@ -55,7 +58,7 @@ class BarChart extends Component {
         .style("text-anchor", "end");
 
       // Add Y axis
-      var y = d3.scaleLinear().domain([0, 13000]).range([height, 0]);
+      var y = d3.scaleLinear().domain([0, 40]).range([height, 0]);
       svg.append("g").call(d3.axisLeft(y));
 
       // Bars
