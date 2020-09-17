@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import * as d3 from "d3";
-
+import Button from "@material-ui/core/Button";
 class BarChart extends Component {
   constructor(props) {
     super(props);
@@ -35,11 +35,13 @@ class BarChart extends Component {
         return {
           Date: d.Date,
           PCount: JSON.parse(d.PCount),
+          DCount: JSON.parse(d.DCount),
         };
       }
     ).then(function (data) {
       // X axis
       console.log(data);
+
       var x = d3
         .scaleBand()
         .range([0, width])
@@ -59,6 +61,7 @@ class BarChart extends Component {
 
       // Add Y axis
       var y = d3.scaleLinear().domain([0, 40]).range([height, 0]);
+
       svg.append("g").call(d3.axisLeft(y));
 
       // Bars
@@ -78,10 +81,31 @@ class BarChart extends Component {
           return height - y(d.PCount);
         })
         .attr("fill", "#69b3a2");
+      this.setState({ data, y });
     });
   }
+  handleUpdate(selectedVar) {}
   render() {
-    return <div id="my_dataviz"></div>;
+    return (
+      <div>
+        <div id="my_dataviz"></div>
+        <Button variant="contained">Default</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.handleUpdate("PCount")}
+        >
+          Productivity
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={this.handleUpdate("DCount")}
+        >
+          Distraction
+        </Button>
+      </div>
+    );
   }
 }
 export default BarChart;

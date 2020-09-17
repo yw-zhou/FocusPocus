@@ -31,3 +31,7 @@
 .cardhalf {
   width: 45%;
 }
+
+.MuiButton-contained {
+  margin: 10px !important;
+}
